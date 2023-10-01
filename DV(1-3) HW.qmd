@@ -15,15 +15,6 @@ exercise_data <- read_csv("https://raw.githubusercontent.com/vaiseys/dav-course/
 glimpse(exercise_data)
 ```
 
-```{r}
-## Rows: 142
-## Columns: 4
-## $ ...1     <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18…
-## $ ...2     <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18…
-## $ Exercise <dbl> 55.3846, 51.5385, 46.1538, 42.8205, 40.7692, 38.7179, 35.6410…
-## $ BMI      <dbl> 1.8320590, 1.7892194, 1.7321050, 1.6178724, 1.5036362, 1.3751…
-```
-
 Before, we see examine anything from the data, write down what you expect the relationship would look like. Do you think people who record more exercise will have more or less BMI?
 
 I expect the relationship to look like BMI will be directly affected by exercise. I think people who record more exercise will have less BMI.
@@ -47,7 +38,30 @@ Let's explore this relationship visually. Make a scatterplot with exercise in th
 
 ## Question 2
 
+```{r}
+install.packages("causact")
+```
+
+```{r}
+library(causact)
+glimpse(corruptDF)
+```
+
+```{r}
+?corruptDF
+```
+
+CPI2017 captures how corrupt a country is in the year 2017 from a scale from 0 which is the worst, and 100 which is the best.
+
+HDI2017 captures how well-developed a country is compared to other countries in the year 2017 based on their longevity, education, and income.
+
 ## Question 3
+
+```{r}
+ exercise_data |>
+   ggplot(aes(x = CPI2017,
+            y = HDI2017)) + geom_point()
+```
 
 ## Question 4
 
