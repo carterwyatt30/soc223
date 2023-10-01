@@ -6,23 +6,55 @@ editor: visual
 embed-resources: true
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+## Question 1
 
 ```{r}
-1 + 1
+library(tidyverse)
+# Read in the data 
+exercise_data <- read_csv("https://raw.githubusercontent.com/vaiseys/dav-course/main/Data/visualize_data.csv")
+glimpse(exercise_data)
 ```
-
-You can add options to executable code like this
 
 ```{r}
-#| echo: false
-2 * 2
+## Rows: 142
+## Columns: 4
+## $ ...1     <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18…
+## $ ...2     <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18…
+## $ Exercise <dbl> 55.3846, 51.5385, 46.1538, 42.8205, 40.7692, 38.7179, 35.6410…
+## $ BMI      <dbl> 1.8320590, 1.7892194, 1.7321050, 1.6178724, 1.5036362, 1.3751…
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+Before, we see examine anything from the data, write down what you expect the relationship would look like. Do you think people who record more exercise will have more or less BMI?
+
+I expect the relationship to look like BMI will be directly affected by exercise. I think people who record more exercise will have less BMI.
+
+Run the following code and tell me what the output indicates.
+
+```{r}
+cor(exercise_data$Exercise, exercise_data$BMI)
+
+```
+
+The output indicates that the BMI is directly affected and decreased by exercise.
+
+Let's explore this relationship visually. Make a scatterplot with exercise in the x axis and BMI in the y axis.
+
+```{r}
+ exercise_data |>
+   ggplot(aes(x = Exercise,
+            y = BMI)) + geom_point()
+```
+
+## Question 2
+
+## Question 3
+
+## Question 4
+
+## Question 5
+
+## Question 6
+
+## Question 7
+
+## Question 8
