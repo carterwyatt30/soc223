@@ -109,6 +109,31 @@ If we were to facet_wrap the data then it would be broken into different categor
 
 ## Question 6
 
+```{r}
+corruptDF |>
+   ggplot(aes(x = CPI2017,
+            y = HDI2017, fill = region, color = region )) + geom_point() + geom_smooth() +
+scale_x_reverse()
+```
+
+The line was just completely reversed and flipped for the graph.
+
 ## Question 7
 
+```{r}
+corruptDF |>
+   ggplot(aes(x = CPI2017,
+            y = HDI2017, fill = region, color = region )) + geom_point() + geom_smooth() +
+scale_x_reverse() +
+  labs(x = "Countries Corrupted 2017", y = "Countries Developed 2017", title = "Relationship Between HDI and CPI", subtitle = "In 2017", caption = "The data comes from the corruptDF dataset")
+```
+
 ## Question 8
+
+```{r}
+ggsave("HDI_CPI_2017.pdf")
+```
+
+The data should be all saved!
+
+(I was unsure if we were supposed to leave the data from question 5 on when we were instructed to add things to our graph and then add things we learned from Healy in Q6).
