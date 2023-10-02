@@ -39,12 +39,12 @@ Let's explore this relationship visually. Make a scatterplot with exercise in th
 ## Question 2
 
 ```{r}
-install.packages("causact")
+install.packages("causact", repos = "http://cran.us.r-project.org")
 ```
 
 ```{r}
 library(causact)
-glimpse(corruptDF)
+(corruptDF)
 ```
 
 ```{r}
@@ -58,14 +58,54 @@ HDI2017 captures how well-developed a country is compared to other countries in 
 ## Question 3
 
 ```{r}
- exercise_data |>
+ corruptDF |>
    ggplot(aes(x = CPI2017,
             y = HDI2017)) + geom_point()
 ```
 
+Describe the relationship that you see.
+
+It seems as if the correlation between countries corrupt and countries developed are more likely to be at a lower lower because the plots are closer together toward the lower half of the graph.
+
 ## Question 4
 
+```{r}
+corruptDF |>
+   ggplot(aes(x = CPI2017,
+            y = HDI2017)) + geom_point() +
+  geom_smooth(method = "lm")
+```
+
+```{r}
+corruptDF |>
+   ggplot(aes(x = CPI2017,
+            y = HDI2017)) + geom_point() +
+  geom_smooth(method = "gam")
+```
+
+What are the differences? Which one do you prefer?
+
+The differences is that in "lm" the data has less scatterplot dots on the shaded line on the linear expression as the shaded line in the linear expression is much thicker in "gam". I personally prefer "lm" because I feel as it is easier to interpret and it is more aesthetically pleasing.
+
 ## Question 5
+
+```{r}
+corruptDF |>
+   ggplot(aes(x = CPI2017,
+            y = HDI2017, fill = region, color = region )) + geom_point() + geom_smooth()
+```
+
+What do you see?
+
+I now see a legend of different regions that are all separated by color.
+
+Are patterns clear or is the graph too cluttered?
+
+The patterns on the graph are way too cluttered and it is an absolute mess that is hard to read.
+
+What would be another way to get these trends by region but in a way to would be more legible?
+
+If we were to facet_wrap the data then it would be broken into different categories and allow us to read the data by region, but separate graphs.
 
 ## Question 6
 
