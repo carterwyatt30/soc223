@@ -1,0 +1,50 @@
+---
+title: "DV (4) HW"
+author: Carter Wyatt
+format: html
+editor: visual
+embed resources: true
+---
+
+## Question 1
+
+```{r}
+library(tidyverse)
+
+# Read in the data 
+tv_ratings <- read_csv("https://raw.githubusercontent.com/vaiseys/dav-course/main/Data/tv_ratings.csv")
+
+# Glimpse the data 
+glimpse(tv_ratings)
+```
+
+```{r}
+tv_long <- tv_ratings %>% 
+  group_by(title) %>% 
+  summarise(num_seasons = n()) %>% 
+  ungroup() %>% 
+  left_join(tv_ratings, by = "title") 
+
+tv_long <- tv_long %>% 
+  filter(num_seasons >= 5)
+```
+
+Use `tv_long` to make a line plot to trace how average ratings evolve across seasons. Remember to use the group aesthetic so that each line represents one show.
+
+```{r}
+tv_long |>
+  ggplot(data = tv_long, mapping = aes(x = seasonNumber, y = av_rating, group = title)) + 
+geom_line() 
+```
+
+It should look fairly messy. Can you draw any conclusions from it?
+
+## Question 2
+
+## Question 3
+
+## Question 4
+
+## Question 5
+
+## Question 6
