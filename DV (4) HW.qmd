@@ -34,7 +34,8 @@ Use `tv_long` to make a line plot to trace how average ratings evolve across sea
 ```{r}
 tv_long |>
   ggplot(data = tv_long, mapping = aes(x = seasonNumber, y = av_rating, group = title)) + 
-geom_line() 
+geom_line() +
+  labs( x = "s", y = "s", title = "s")
 ```
 
 It should look fairly messy. Can you draw any conclusions from it?
