@@ -35,10 +35,12 @@ Use `tv_long` to make a line plot to trace how average ratings evolve across sea
 tv_long |>
   ggplot(data = tv_long, mapping = aes(x = seasonNumber, y = av_rating, group = title)) + 
 geom_line() +
-  labs( x = "s", y = "s", title = "s")
+  labs( x = "Seasons", y = "Average Ratings", title = "How Average Ratings Evolve Across Seasons")
 ```
 
 It should look fairly messy. Can you draw any conclusions from it?
+
+The only conclusions that I can draw is the average ratings seem to dip fairly low every five years and they are rising back to the top by season twenty.
 
 ## Question 2
 

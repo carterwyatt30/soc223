@@ -159,12 +159,13 @@ $ genres       &lt;chr&gt; "Drama,Mystery,Sci-Fi", "Adventure,Drama,Mystery", "A
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tv_long <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> tv_long, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> seasonNumber, <span class="at">y =</span> av_rating, <span class="at">group =</span> title)) <span class="sc">+</span> </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="at">x =</span> <span class="st">"s"</span>, <span class="at">y =</span> <span class="st">"s"</span>, <span class="at">title =</span> <span class="st">"s"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="at">x =</span> <span class="st">"Seasons"</span>, <span class="at">y =</span> <span class="st">"Average Ratings"</span>, <span class="at">title =</span> <span class="st">"How Average Ratings Evolve Across Seasons"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="DV--4--HW_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>It should look fairly messy. Can you draw any conclusions from it?</p>
+<p>The only conclusions that I can draw is the average ratings seem to dip fairly low every five years and they are rising back to the top by season twenty.</p>
 </section>
 <section id="question-2" class="level2">
 <h2 class="anchored" data-anchor-id="question-2">Question 2</h2>
