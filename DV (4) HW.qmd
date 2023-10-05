@@ -33,7 +33,7 @@ Use `tv_long` to make a line plot to trace how average ratings evolve across sea
 
 ```{r}
 tv_long |>
-  ggplot(data = tv_long, mapping = aes(x = seasonNumber, y = av_rating, group = title)) + 
+  ggplot(data = tv_long, mapping = aes(x = seasonNumber, y = av_rating, group = titleId)) + 
 geom_line() +
   labs( x = "Seasons", y = "Average Ratings", title = "How Average Ratings Evolve Across Seasons")
 ```
@@ -43,6 +43,26 @@ It should look fairly messy. Can you draw any conclusions from it?
 The only conclusions that I can draw is the average ratings seem to dip fairly low every five years and they are rising back to the top by season twenty.
 
 ## Question 2
+
+```{r}
+tv_long |>
+  ggplot(data = tv_long, mapping = aes(x = seasonNumber, y = av_rating, group = titleId)) + 
+geom_line() +
+  labs( x = "Seasons", y = "Average Ratings", title = "How Average Ratings Evolve Across Seasons") +
+  facet_wrap(~genres)
+```
+
+What shows tend to last longer?
+
+It seems that crime, drama, and mystery seem to last as they span across the most amount of seasons.
+
+Do ratings change much across seasons?
+
+Ratings do change very much across seasons, the line is up and down continuously on the graph.
+
+Can you identify that show on `Drama, Family, Fantasy` whose ratings just plummeted?
+
+The show "Are You Afraid of the Dark?" caused the ratings to plummet.
 
 ## Question 3
 
