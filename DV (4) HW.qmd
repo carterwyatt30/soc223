@@ -152,3 +152,25 @@ glimpse(comedies_dramas) |>
 I personally think that histograms are the most informative of the three plots.
 
 ## Question 6
+
+```{r}
+comedies_dramas |>
+  ggplot(aes(x = av_rating, y = share)) +
+  geom_bin_2d() +
+  labs(x = "Average Ratings", y = "Share", title = "Quality of show Correspondence")
+```
+
+What do you see? What additional information does this give you in comparison to a scatter plot?
+
+I see a plot of data that shows the count of data that is separated by the count of color. The difference from a scatter plot is the continous scale of color that shows you the average rating and share count, by color.
+
+```{r}
+comedies_dramas |>
+  ggplot(aes(x = av_rating, y = share, fill = genres)) +
+  geom_bin_2d() +
+  labs(x = "Average Ratings", y = "Share", title = "Quality of show Correspondence")
+```
+
+What patterns do you see? Can you identify that big outlier that apparently captured the nation?
+
+The pattern I notice is that there are a lot of drama shows with a lot of lower ratings, and comedies generally tend to have higher ratings, but the biggest outlier is the drama show that captured the nations attention.
