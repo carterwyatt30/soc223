@@ -66,6 +66,24 @@ The show "Are You Afraid of the Dark?" caused the ratings to plummet.
 
 ## Question 3
 
+```{r}
+ tv_ratings |> 
+  group_by(genres) |> 
+  filter(av_rating >= 9) |> 
+  ggplot(aes(x = genres)) +
+  geom_bar() +
+   coord_flip()
+
+```
+
+Tell me what `coord_flip()` does?
+
+The function "coord_flip", completely flips the x and y variable so it is easier to read on the graph.
+
+What is the genre with the most top-rated shows?
+
+Drama is by far the genre with the most top-rated shows.
+
 ## Question 4
 
 ## Question 5
