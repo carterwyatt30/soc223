@@ -243,9 +243,76 @@ $ is_comedy    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1,
 <section id="question-5" class="level2">
 <h2 class="anchored" data-anchor-id="question-5">Question 5</h2>
 <p>Let’s experiment with different ways of visualizing this. First, do the same plot using histograms.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>comedies_dramas <span class="ot">&lt;-</span> tv_ratings <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">is_comedy =</span> <span class="fu">if_else</span>(<span class="fu">str_detect</span>(genres, <span class="st">"Comedy"</span>), </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                             <span class="dv">1</span>, </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                             <span class="dv">0</span>)) <span class="sc">%&gt;%</span> <span class="co"># If it contains the word comedy then 1, else 0</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(is_comedy <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> genres <span class="sc">==</span> <span class="st">"Drama"</span>) <span class="sc">%&gt;%</span> <span class="co"># Keep comedies and dramas</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">genres =</span> <span class="fu">if_else</span>(genres <span class="sc">==</span> <span class="st">"Drama"</span>, <span class="co"># Make it so that we only have those two genres</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Drama"</span>, </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Comedy"</span>))</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(comedies_dramas) <span class="sc">|&gt;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> av_rating, <span class="at">group =</span> genres, <span class="at">color =</span> genres)) <span class="sc">+</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Average Ratings"</span>, <span class="at">y =</span> <span class="st">"Density"</span>, <span class="at">title =</span> <span class="st">"Comedy vs. Drama"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 684
+Columns: 8
+$ titleId      &lt;chr&gt; "tt0312081", "tt0312081", "tt0312081", "tt1225901", "tt12…
+$ seasonNumber &lt;dbl&gt; 1, 2, 3, 1, 2, 3, 4, 5, 1, 2, 1, 25, 1, 1, 2, 3, 4, 5, 1,…
+$ title        &lt;chr&gt; "8 Simple Rules", "8 Simple Rules", "8 Simple Rules", "90…
+$ date         &lt;date&gt; 2002-09-17, 2003-11-04, 2004-11-12, 2009-01-03, 2009-11-…
+$ av_rating    &lt;dbl&gt; 7.5000, 8.6000, 8.4043, 7.1735, 7.4686, 7.6858, 6.8344, 7…
+$ share        &lt;dbl&gt; 0.03, 0.10, 0.06, 0.40, 0.14, 0.10, 0.04, 0.01, 0.48, 0.4…
+$ genres       &lt;chr&gt; "Comedy", "Comedy", "Comedy", "Comedy", "Comedy", "Comedy…
+$ is_comedy    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, …</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="DV--4--HW_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>What additional information does this give you?</p>
-<p>Hint: look at the size of the bars. I probably categorized way too many shows as “comedies”. I had to stack the deck.</p>
+<p>The histogram gives one the ability to tell the density of each genres average rating.</p>
 <p>Now, use <code>geom_freqpoly()</code>. What do you notice? Of the three plots, which one do you think it’s more informative?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>comedies_dramas <span class="ot">&lt;-</span> tv_ratings <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">is_comedy =</span> <span class="fu">if_else</span>(<span class="fu">str_detect</span>(genres, <span class="st">"Comedy"</span>), </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                             <span class="dv">1</span>, </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                             <span class="dv">0</span>)) <span class="sc">%&gt;%</span> <span class="co"># If it contains the word comedy then 1, else 0</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(is_comedy <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> genres <span class="sc">==</span> <span class="st">"Drama"</span>) <span class="sc">%&gt;%</span> <span class="co"># Keep comedies and dramas</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">genres =</span> <span class="fu">if_else</span>(genres <span class="sc">==</span> <span class="st">"Drama"</span>, <span class="co"># Make it so that we only have those two genres</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Drama"</span>, </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Comedy"</span>))</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(comedies_dramas) <span class="sc">|&gt;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> av_rating, <span class="at">group =</span> genres, <span class="at">color =</span> genres)) <span class="sc">+</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_freqpoly</span>() <span class="sc">+</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Average Ratings"</span>, <span class="at">y =</span> <span class="st">"Density"</span>, <span class="at">title =</span> <span class="st">"Comedy vs. Drama"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 684
+Columns: 8
+$ titleId      &lt;chr&gt; "tt0312081", "tt0312081", "tt0312081", "tt1225901", "tt12…
+$ seasonNumber &lt;dbl&gt; 1, 2, 3, 1, 2, 3, 4, 5, 1, 2, 1, 25, 1, 1, 2, 3, 4, 5, 1,…
+$ title        &lt;chr&gt; "8 Simple Rules", "8 Simple Rules", "8 Simple Rules", "90…
+$ date         &lt;date&gt; 2002-09-17, 2003-11-04, 2004-11-12, 2009-01-03, 2009-11-…
+$ av_rating    &lt;dbl&gt; 7.5000, 8.6000, 8.4043, 7.1735, 7.4686, 7.6858, 6.8344, 7…
+$ share        &lt;dbl&gt; 0.03, 0.10, 0.06, 0.40, 0.14, 0.10, 0.04, 0.01, 0.48, 0.4…
+$ genres       &lt;chr&gt; "Comedy", "Comedy", "Comedy", "Comedy", "Comedy", "Comedy…
+$ is_comedy    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, …</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="DV--4--HW_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>I personally think that histograms are the most informative of the three plots.</p>
 </section>
 <section id="question-6" class="level2">
 <h2 class="anchored" data-anchor-id="question-6">Question 6</h2>

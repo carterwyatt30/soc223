@@ -111,10 +111,44 @@ Your predictions above do hold true as comedies do rival the best dramas, and co
 
 Let's experiment with different ways of visualizing this. First, do the same plot using histograms.
 
+```{r}
+comedies_dramas <- tv_ratings %>% 
+  mutate(is_comedy = if_else(str_detect(genres, "Comedy"), 
+                             1, 
+                             0)) %>% # If it contains the word comedy then 1, else 0
+  filter(is_comedy == 1 | genres == "Drama") %>% # Keep comedies and dramas
+  mutate(genres = if_else(genres == "Drama", # Make it so that we only have those two genres
+                          "Drama", 
+                          "Comedy"))
+
+glimpse(comedies_dramas) |>
+  ggplot(aes(x = av_rating, group = genres, color = genres)) +
+  geom_histogram() +
+  labs(x = "Average Ratings", y = "Density", title = "Comedy vs. Drama")
+```
+
 What additional information does this give you?
 
-Hint: look at the size of the bars. I probably categorized way too many shows as "comedies". I had to stack the deck.
+The histogram gives one the ability to tell the density of each genres average rating.
 
 Now, use `geom_freqpoly()`. What do you notice? Of the three plots, which one do you think it's more informative?
+
+```{r}
+comedies_dramas <- tv_ratings %>% 
+  mutate(is_comedy = if_else(str_detect(genres, "Comedy"), 
+                             1, 
+                             0)) %>% # If it contains the word comedy then 1, else 0
+  filter(is_comedy == 1 | genres == "Drama") %>% # Keep comedies and dramas
+  mutate(genres = if_else(genres == "Drama", # Make it so that we only have those two genres
+                          "Drama", 
+                          "Comedy"))
+
+glimpse(comedies_dramas) |>
+  ggplot(aes(x = av_rating, group = genres, color = genres)) +
+  geom_freqpoly() +
+  labs(x = "Average Ratings", y = "Density", title = "Comedy vs. Drama")
+```
+
+I personally think that histograms are the most informative of the three plots.
 
 ## Question 6
