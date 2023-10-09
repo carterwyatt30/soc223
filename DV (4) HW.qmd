@@ -72,7 +72,8 @@ The show "Are You Afraid of the Dark?" caused the ratings to plummet.
   filter(av_rating >= 9) |> 
   ggplot(aes(x = genres)) +
   geom_bar() +
-   coord_flip()
+   coord_flip() +
+   labs(x = "Rating Count", y = "Genres", title = "Movie Genre Ratings")
 
 ```
 
@@ -86,6 +87,34 @@ Drama is by far the genre with the most top-rated shows.
 
 ## Question 4
 
+```{r}
+comedies_dramas <- tv_ratings %>% 
+  mutate(is_comedy = if_else(str_detect(genres, "Comedy"), 
+                             1, 
+                             0)) %>% # If it contains the word comedy then 1, else 0
+  filter(is_comedy == 1 | genres == "Drama") %>% # Keep comedies and dramas
+  mutate(genres = if_else(genres == "Drama", # Make it so that we only have those two genres
+                          "Drama", 
+                          "Comedy"))
+
+glimpse(comedies_dramas) |>
+  ggplot(aes(x = av_rating, group = genres, color = genres)) +
+  geom_density() +
+  labs(x = "Average Ratings", y = "Density", title = "Comedy vs. Drama")
+```
+
+How does my prediction above hold? Are dramas rated higher?
+
+Your predictions above do hold true as comedies do rival the best dramas, and comedies are actually rated higher.
+
 ## Question 5
+
+Let's experiment with different ways of visualizing this. First, do the same plot using histograms.
+
+What additional information does this give you?
+
+Hint: look at the size of the bars. I probably categorized way too many shows as "comedies". I had to stack the deck.
+
+Now, use `geom_freqpoly()`. What do you notice? Of the three plots, which one do you think it's more informative?
 
 ## Question 6
