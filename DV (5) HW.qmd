@@ -22,10 +22,21 @@ wncaa |>
   filter(tourney_finish == "Champ") |>
   group_by(school) |>
 summarise(number = n()) |>
-  mutate(freq = number / sum(number), pct = round((freq*100), 0), 0)
+  mutate(freq = number / sum(number), pct = round((freq*100), 0), 0) |>
+  ggplot(aes(x = school, fill = pct)) +
+  geom_bar() +
+  coord_flip()
                     
   
 ```
+
+What patterns do you see?
+
+I see that a large majority of the schools are in between the 10 and 20 mark.
+
+Who are the two teams that have won the most?
+
+Tennessee and Uconn have won the most by far.
 
 ## Question 2
 
