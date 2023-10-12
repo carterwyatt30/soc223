@@ -1,0 +1,33 @@
+---
+title: "MD HW5"
+author: "Carter Wyatt"
+format: html
+editor: visual
+embed resources: true
+---
+
+```{r}
+library(tidyverse)
+
+twitch_data <- read_csv("https://github.com/vaiseys/dav-course/blob/main/Data/twitchdata-update.csv")
+```
+
+```{r}
+library(janitor)
+twitch_data <- clean_names(twitch_data)
+
+# Inspect new names
+colnames(twitch_data)
+```
+
+## Question 1
+
+## Question 2
+
+## Question 3
+
+## Question 4
+
+## Question 5
+
+## Question 6

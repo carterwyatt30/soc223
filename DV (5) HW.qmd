@@ -41,7 +41,22 @@ Tennessee and Uconn have won the most by far.
 ## Question 2
 
 ```{r}
+
+champs <- wncaa |>
+  filter(tourney_finish == "Champ")
+
 champ_names <- unique(champs$school)
+```
+
+```{r}
+winners <- wncaa %>% 
+  filter(school %in% champ_names)
+```
+
+```{r}
+  ggplot(data = winners, 
+         aes(x = school, y = seed)) +
+    geom_boxplot() + coord_flip() + geom_jitter() + geom_jitter(position = position_jitter(width = 5))
 ```
 
 ## Question 3
