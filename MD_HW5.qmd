@@ -174,3 +174,13 @@ Now, fit your model. Your coefficients will tell you how many more (or fewer) av
 ## Question 6
 
 Explore the residuals here using a similar plot as above. There are a couple of points our model really missed - which ones were they?
+
+```{r}
+twitch_data |> 
+  ggplot(aes(x = average_viewers, y = language)) +
+geom_jitter(alpha = 0.2) + 
+geom_smooth(method = lm) + 
+scale_x_log10() 
+```
+
+There are a couple of points our model really missed - which ones were they?
