@@ -158,13 +158,13 @@ Attaching package: 'janitor'</code></pre>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
-  channel        average_viewers followers
-  &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;
-1 supertf                   2526    196136
-2 Yassuo                   10531   1878416
-3 BruceGrannec              3011    463188
-4 ElcanaldeJoaco            8673    810622
-5 DavyJones                 4111    955846</code></pre>
+  channel      average_viewers followers
+  &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;
+1 TommyKayLIVE            1124    127770
+2 LITkillah               9104    601927
+3 kyo1984123              1516    135687
+4 TpaBoMaH                1531    151266
+5 EFEUYGAC                3700    358498</code></pre>
 </div>
 </div>
 <p>What do you notice?</p>
@@ -184,11 +184,11 @@ dplyr 1.1.0.
 <pre><code># A tibble: 5 × 2
   average_viewers followers
             &lt;dbl&gt;     &lt;dbl&gt;
-1            7554    658658
-2            1560    122486
-3            1027    255595
-4           46459   1162746
-5            5573    672403</code></pre>
+1            6210   1093212
+2            1559    206794
+3            1072     58531
+4            2452    775987
+5             918    125775</code></pre>
 </div>
 </div>
 <p>Describe the results in a few words. Does anything capture your attention?</p>
@@ -343,7 +343,8 @@ $ .std.resid    &lt;dbl&gt; 1.3420109, 0.8227954, 0.5389316, -0.6251793, 0.59536
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">language =</span> <span class="fu">relevel</span>(language, <span class="at">ref =</span> <span class="st">"English"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>twitch_data <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> average_viewers, <span class="at">y =</span> language)) <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> average_viewers, <span class="at">y =</span> language), <span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>twitch_data <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> average_viewers, <span class="at">y =</span> language)) <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> average_viewers, <span class="at">y =</span> language), <span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Views Avg"</span>, <span class="at">y =</span> <span class="st">"Language"</span>, <span class="at">title =</span> <span class="st">"Language in Average Viewers"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="MD_HW5_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>

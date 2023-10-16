@@ -165,7 +165,8 @@ twitch_data <- twitch_data %>%
 ```
 
 ```{r}
-twitch_data |> ggplot(aes(x = average_viewers, y = language)) + geom_jitter(alpha = 0.4) + geom_line(aes(x = average_viewers, y = language), col = "red") + theme_minimal()
+twitch_data |> ggplot(aes(x = average_viewers, y = language)) + geom_jitter(alpha = 0.4) + geom_line(aes(x = average_viewers, y = language), col = "red") + theme_minimal() + 
+  labs(x = "Views Avg", y = "Language", title = "Language in Average Viewers")
 ```
 
 Now, fit your model. Your coefficients will tell you how many more (or fewer) average viewers are related to streaming in languages different than English. Interpret the results. How is my prediction doing?
