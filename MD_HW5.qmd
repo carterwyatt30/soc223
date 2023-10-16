@@ -154,6 +154,22 @@ twitch_data |>
 
 ## Question 5
 
+```{r}
+fit3 <- lm(average_viewers ~ language, data = twitch_data)
+```
+
+```{r}
+twitch_data <- twitch_data %>% 
+  mutate(language = as.factor(language), 
+         language = relevel(language, ref = "English"))
+```
+
+```{r}
+twitch_data |> ggplot(aes(x = average_viewers, y = language)) + geom_jitter(alpha = 0.4) + geom_line(aes(x = average_viewers, y = language), col = "red") + theme_minimal()
+```
+
+Now, fit your model. Your coefficients will tell you how many more (or fewer) average viewers are related to streaming in languages different than English. Interpret the results. How is my prediction doing?
+
 ## Question 6
 
 Explore the residuals here using a similar plot as above. There are a couple of points our model really missed - which ones were they?
