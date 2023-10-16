@@ -79,13 +79,23 @@ twitch_data <- twitch_data %>%
 ## Question 2
 
 ```{r}
-
+fit1 <- lm(log_viewers ~ average_viewers,  data = twitch_data)
 ```
 
 ## Question 3
 
 ```{r}
+library(broom)
+
+pred_data <- augment(fit1)
+
+# glimpse our new data 
+glimpse(pred_data)
 ```
+
+\$\$ 1.1\^{0.4} = 4.442731 \$\$
+
+A 10% increase in followers is associated with a 4.2% increase in the average number of viewers.
 
 ## Question 4
 

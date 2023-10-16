@@ -158,13 +158,13 @@ Attaching package: 'janitor'</code></pre>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
-  channel         average_viewers followers
-  &lt;chr&gt;                     &lt;dbl&gt;     &lt;dbl&gt;
-1 TFBlade                    9117   1008040
-2 Lutti                      1153    226344
-3 Yassuo                    10531   1878416
-4 WePlayEsport_EN            6127    175061
-5 SolaryHS                   1802    149073</code></pre>
+  channel          average_viewers followers
+  &lt;chr&gt;                      &lt;dbl&gt;     &lt;dbl&gt;
+1 PaymoneyWubby               5485    302419
+2 TobiasFate                  1233    701822
+3 Philza                      2991    527540
+4 루시아 (lucia94)            1603     82578
+5 ESL_CSGOb                   5114    575769</code></pre>
 </div>
 </div>
 <p>What do you notice?</p>
@@ -184,11 +184,11 @@ dplyr 1.1.0.
 <pre><code># A tibble: 5 × 2
   average_viewers followers
             &lt;dbl&gt;     &lt;dbl&gt;
-1            5300    126546
-2            4647    733628
-3            3678    988237
-4            2028    244207
-5            5684    348447</code></pre>
+1            1233    701822
+2            1985    330772
+3            1569    256448
+4            2647    179420
+5            9235    833047</code></pre>
 </div>
 </div>
 <p>Describe the results in a few words. Does anything capture your attention?</p>
@@ -245,9 +245,34 @@ dplyr 1.1.0.
 </section>
 <section id="question-2" class="level2">
 <h2 class="anchored" data-anchor-id="question-2">Question 2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_viewers <span class="sc">~</span> average_viewers,  <span class="at">data =</span> twitch_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="question-3" class="level2">
 <h2 class="anchored" data-anchor-id="question-3">Question 3</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>pred_data <span class="ot">&lt;-</span> <span class="fu">augment</span>(fit1)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># glimpse our new data </span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(pred_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,000
+Columns: 8
+$ log_viewers     &lt;dbl&gt; 4.442731, 4.408410, 4.040444, 3.887280, 4.471321, 4.62…
+$ average_viewers &lt;dbl&gt; 27716, 25610, 10976, 7714, 29602, 42414, 24181, 18985,…
+$ .fitted         &lt;dbl&gt; 4.227815, 4.156428, 3.660378, 3.549806, 4.291745, 4.72…
+$ .resid          &lt;dbl&gt; 0.21491505, 0.25198134, 0.38006578, 0.33747361, 0.1795…
+$ .hat            &lt;dbl&gt; 0.008367809, 0.007076837, 0.001537551, 0.001120491, 0.…
+$ .sigma          &lt;dbl&gt; 0.2790529, 0.2790217, 0.2788766, 0.2789317, 0.2790781,…
+$ .cooksd         &lt;dbl&gt; 0.0025247363, 0.0029276318, 0.0014310517, 0.0008215493…
+$ .std.resid      &lt;dbl&gt; 0.7735572, 0.9063824, 1.3633075, 1.2102753, 0.6467694,…</code></pre>
+</div>
+</div>
+<p>$$ 1.1^{0.4} = 4.442731 $$</p>
+<p>A 10% increase in followers is associated with a 4.2% increase in the average number of viewers.</p>
 </section>
 <section id="question-4" class="level2">
 <h2 class="anchored" data-anchor-id="question-4">Question 4</h2>
