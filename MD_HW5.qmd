@@ -33,7 +33,47 @@ twitch_data |>
 What do you notice?
 
 ```{r}
+twitch_data |>
+  select(channel, average_viewers, followers) |>
+  sample_n(size = 5) |>
+summarise(average_viewers, followers)
+```
 
+Describe the results in a few words. Does anything capture your attention?
+
+```{r}
+twitch_data |>
+  select(channel, average_viewers, followers) |>
+  sample_n(size = 5) |>
+summarise(average_viewers, followers) |>
+  ggplot(
+    aes(x = average_viewers, y = followers)
+  ) +
+  geom_point() +
+  labs(x = "Average Viewers", y = "Followers", title = "Random Channels")
+```
+
+What do you notice?
+
+```{r}
+twitch_data |>
+  select(channel, average_viewers, followers) |>
+  sample_n(size = 5) |>
+summarise(average_viewers, followers) |>
+  ggplot(
+    aes(x = average_viewers, y = followers)
+  ) +
+  geom_point() +
+  labs(x = "Average Viewers", y = "Followers", title = "Random Channels") +
+  scale_x_log10() + scale_y_log10()
+```
+
+What do you see now? How does the relationship look like?
+
+```{r}
+twitch_data <- twitch_data %>% 
+  mutate(log_viewers = log10(average_viewers), 
+         log_followers = log10(followers))
 ```
 
 ## Question 2
