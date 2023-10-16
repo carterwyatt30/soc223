@@ -9,6 +9,7 @@ embed resources: true
 ```{r}
 library(tidyverse)
 
+
 twitch_data <- read_csv("https://raw.githubusercontent.com/vaiseys/dav-course/main/Data/twitchdata-update.csv")
 ```
 
@@ -112,6 +113,25 @@ pred_data %>%
        x = "log(followers)", 
        y = "log(viewers)")
 ```
+
+Do you think our model describes the relationship well?
+
+```{r}
+pred_data %>% 
+  ggplot(aes(x = log_followers, 
+             y = .resid)) +
+  geom_jitter(alpha = 0.4) + 
+  geom_line(aes(x = log_followers, 
+                y = .fitted), 
+            col = "orange") + 
+  theme_minimal() +
+  labs(subtitle = "Fitted Model and Raw Data", 
+       title = "Followers & Average Viewership", 
+       x = "log(followers)", 
+       y = "log(viewers)")
+```
+
+What do you see? Are there any big residuals? DO they happen often in a particular range of our x-variable? If so, we would have a problem: our model would systematically fail to predict part of our data.
 
 ## Question 4
 

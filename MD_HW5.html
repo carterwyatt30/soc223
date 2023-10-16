@@ -158,13 +158,13 @@ Attaching package: 'janitor'</code></pre>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
-  channel            average_viewers followers
-  &lt;chr&gt;                        &lt;dbl&gt;     &lt;dbl&gt;
-1 태준이 (dlxowns45)            2023    346631
-2 AladdinTV                     1416    110211
-3 dinablin                      2413    293748
-4 koil                          2791    299033
-5 Bonjwa                        1802    123954</code></pre>
+  channel     average_viewers followers
+  &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt;
+1 Valkia                 1008    308459
+2 WELOVEGAMES            2761    413458
+3 Aurateur               2492    142427
+4 39daph                 3766    505362
+5 AnthonyZ               1216    199617</code></pre>
 </div>
 </div>
 <p>What do you notice?</p>
@@ -184,11 +184,11 @@ dplyr 1.1.0.
 <pre><code># A tibble: 5 × 2
   average_viewers followers
             &lt;dbl&gt;     &lt;dbl&gt;
-1            5195    303671
-2            1400     86561
-3            1169     51589
-4            2391    512592
-5            7522    828896</code></pre>
+1            4269    317896
+2             683    206681
+3            7699   2601858
+4            1111    189654
+5             829    227062</code></pre>
 </div>
 </div>
 <p>Describe the results in a few words. Does anything capture your attention?</p>
@@ -290,6 +290,25 @@ $ .std.resid    &lt;dbl&gt; 1.3420109, 0.8227954, 0.5389316, -0.6251793, 0.59536
 <p><img src="MD_HW5_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Do you think our model describes the relationship well?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pred_data <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> log_followers, </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> .resid)) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span> </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> log_followers, </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> .fitted), </span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"orange"</span>) <span class="sc">+</span> </span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Fitted Model and Raw Data"</span>, </span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Followers &amp; Average Viewership"</span>, </span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"log(followers)"</span>, </span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"log(viewers)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="MD_HW5_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>What do you see? Are there any big residuals? DO they happen often in a particular range of our x-variable? If so, we would have a problem: our model would systematically fail to predict part of our data.</p>
 </section>
 <section id="question-4" class="level2">
 <h2 class="anchored" data-anchor-id="question-4">Question 4</h2>
