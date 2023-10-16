@@ -158,13 +158,13 @@ Attaching package: 'janitor'</code></pre>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
-  channel     average_viewers followers
-  &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt;
-1 Valkia                 1008    308459
-2 WELOVEGAMES            2761    413458
-3 Aurateur               2492    142427
-4 39daph                 3766    505362
-5 AnthonyZ               1216    199617</code></pre>
+  channel           average_viewers followers
+  &lt;chr&gt;                       &lt;dbl&gt;     &lt;dbl&gt;
+1 DreamHackDota2_RU           22356    203419
+2 tarzaned                     4159    388878
+3 Pieface23                    2149    238155
+4 AladdinTV                    1416    110211
+5 DanucD                       2045    546052</code></pre>
 </div>
 </div>
 <p>What do you notice?</p>
@@ -184,11 +184,11 @@ dplyr 1.1.0.
 <pre><code># A tibble: 5 × 2
   average_viewers followers
             &lt;dbl&gt;     &lt;dbl&gt;
-1            4269    317896
-2             683    206681
-3            7699   2601858
-4            1111    189654
-5             829    227062</code></pre>
+1            1196    324765
+2            1400    229586
+3            1759    151886
+4            6125    442493
+5            1782    236407</code></pre>
 </div>
 </div>
 <p>Describe the results in a few words. Does anything capture your attention?</p>
@@ -312,6 +312,25 @@ $ .std.resid    &lt;dbl&gt; 1.3420109, 0.8227954, 0.5389316, -0.6251793, 0.59536
 </section>
 <section id="question-4" class="level2">
 <h2 class="anchored" data-anchor-id="question-4">Question 4</h2>
+<ol type="1">
+<li><p>The raw data</p></li>
+<li><p>Summaries of the variables</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_viewers <span class="sc">~</span> language, <span class="at">data =</span> twitch_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li>Plot the variables</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>twitch_data <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> average_viewers)) <span class="sc">+</span>   <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>language) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total Number"</span>, <span class="at">y =</span> <span class="st">"Average Viewers"</span>, <span class="at">title =</span> <span class="st">"Language Average Views"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="MD_HW5_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="question-5" class="level2">
 <h2 class="anchored" data-anchor-id="question-5">Question 5</h2>

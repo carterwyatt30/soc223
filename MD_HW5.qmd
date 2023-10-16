@@ -135,6 +135,23 @@ What do you see? Are there any big residuals? DO they happen often in a particul
 
 ## Question 4
 
+1.  The raw data
+
+2.  Summaries of the variables
+
+```{r}
+fit2 <- lm(log_viewers ~ language, data = twitch_data)
+```
+
+1.  Plot the variables
+
+```{r}
+twitch_data |>
+  ggplot(
+    aes(x = average_viewers)) +   geom_boxplot() + facet_wrap(~language) +
+  labs(x = "Total Number", y = "Average Viewers", title = "Language Average Views")
+```
+
 ## Question 5
 
 ## Question 6
