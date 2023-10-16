@@ -158,13 +158,13 @@ Attaching package: 'janitor'</code></pre>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
-  channel       average_viewers followers
-  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;
-1 DizzyKitten              1584    613135
-2 Pelegrino1993            1074     80566
-3 ElOjoNinja               1484    273504
-4 Crystal_LoL              1466    167132
-5 Kyle                     3059    182260</code></pre>
+  channel         average_viewers followers
+  &lt;chr&gt;                     &lt;dbl&gt;     &lt;dbl&gt;
+1 TeePee                     4410    520519
+2 Rainbow6                  11535   1501197
+3 mch_AGG                     884    219431
+4 六希夫 (qttsix)            1412    118305
+5 Ziqoftw                    1293    198304</code></pre>
 </div>
 </div>
 <p>What do you notice?</p>
@@ -185,11 +185,11 @@ dplyr 1.1.0.
 <pre><code># A tibble: 5 × 2
   average_viewers followers
             &lt;dbl&gt;     &lt;dbl&gt;
-1            3678    988237
-2            1953    314170
-3            1586    621921
-4            1384    961860
-5           24181   4074287</code></pre>
+1             872     79392
+2            7656    845158
+3            3680    200953
+4            3992    171858
+5           15483   2137521</code></pre>
 </div>
 </div>
 <p>Describe the results in a few words. Does anything capture your attention?</p>
@@ -361,10 +361,12 @@ $ .std.resid    &lt;dbl&gt; 1.3420109, 0.8227954, 0.5389316, -0.6251793, 0.59536
 </div>
 </div>
 <p>Now, fit your model. Your coefficients will tell you how many more (or fewer) average viewers are related to streaming in languages different than English. Interpret the results. How is my prediction doing?</p>
+<p>Your prediction is doing suprisingly and pleasantly well for our data model as long as I am doing it correctly.</p>
 </section>
 <section id="question-6" class="level2">
 <h2 class="anchored" data-anchor-id="question-6">Question 6</h2>
 <p>Explore the residuals here using a similar plot as above. There are a couple of points our model really missed - which ones were they?</p>
+<p>Geom Smooth was missed as well as scale_x_log10 which is very important in understanding the data and interpretting it.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>twitch_data <span class="sc">|&gt;</span> </span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> average_viewers, <span class="at">y =</span> language)) <span class="sc">+</span></span>
@@ -386,6 +388,7 @@ $ .std.resid    &lt;dbl&gt; 1.3420109, 0.8227954, 0.5389316, -0.6251793, 0.59536
 </div>
 </div>
 <p>There are a couple of points our model really missed - which ones were they?</p>
+<p>They missed Finnish, Greek, Other and Swedish.</p>
 </section>
 
 </main>

@@ -193,9 +193,13 @@ twitch_data |> ggplot(aes(x = average_viewers, y = language)) + geom_jitter(alph
 
 Now, fit your model. Your coefficients will tell you how many more (or fewer) average viewers are related to streaming in languages different than English. Interpret the results. How is my prediction doing?
 
+Your prediction is doing suprisingly and pleasantly well for our data model as long as I am doing it correctly.
+
 ## Question 6
 
 Explore the residuals here using a similar plot as above. There are a couple of points our model really missed - which ones were they?
+
+Geom Smooth was missed as well as scale_x_log10 which is very important in understanding the data and interpretting it.
 
 ```{r}
 twitch_data |> 
@@ -206,3 +210,5 @@ scale_x_log10()
 ```
 
 There are a couple of points our model really missed - which ones were they?
+
+They missed Finnish, Greek, Other and Swedish.
