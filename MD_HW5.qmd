@@ -33,6 +33,8 @@ twitch_data |>
 
 What do you notice?
 
+I notice that there is an array of average viewers, followers, and channels every time I run the code.
+
 ```{r}
 twitch_data |>
   select(channel, average_viewers, followers) |>
@@ -41,6 +43,8 @@ summarise(average_viewers, followers)
 ```
 
 Describe the results in a few words. Does anything capture your attention?
+
+The results of viewers seem to be all over the place and the the thing that captures my attention the most is the average viewer outlier at over 5,000.
 
 ```{r}
 twitch_data |>
@@ -56,6 +60,8 @@ summarise(average_viewers, followers) |>
 
 What do you notice?
 
+I notice that the number of followers has seemed to go down a tad, but the overall average viewers has gone up.
+
 ```{r}
 twitch_data |>
   select(channel, average_viewers, followers) |>
@@ -70,6 +76,8 @@ summarise(average_viewers, followers) |>
 ```
 
 What do you see now? How does the relationship look like?
+
+I see that the number of followers has begin to go back up as well as the number of average viewers. The relationship looks like the more viewers, the more followers.
 
 ```{r}
 twitch_data <- twitch_data %>% 
@@ -116,6 +124,8 @@ pred_data %>%
 
 Do you think our model describes the relationship well?
 
+I think our model describes the relationship exceptionally well.
+
 ```{r}
 pred_data %>% 
   ggplot(aes(x = log_followers, 
@@ -131,7 +141,19 @@ pred_data %>%
        y = "log(viewers)")
 ```
 
-What do you see? Are there any big residuals? DO they happen often in a particular range of our x-variable? If so, we would have a problem: our model would systematically fail to predict part of our data.
+What do you see?
+
+I see the number of viewers increasing increminetaly and the number of followers seeming to stay around the same.
+
+Are there any big residuals?
+
+There are some big residuals in the log(followers) category that are noticable.
+
+DO they happen often in a particular range of our x-variable?
+
+It seems the range that it seems to happen in is the x-variable in between 5 and 6.
+
+If so, we would have a problem: our model would systematically fail to predict part of our data.
 
 ## Question 4
 

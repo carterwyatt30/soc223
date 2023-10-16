@@ -160,14 +160,15 @@ Attaching package: 'janitor'</code></pre>
 <pre><code># A tibble: 5 × 3
   channel       average_viewers followers
   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;
-1 Asmongold               42414   1563438
-2 UNLOSTV                 12171   1585519
-3 LightFuryLF              1169     51589
-4 RocketBeansTV             696    416018
-5 Monstercat                313    788684</code></pre>
+1 DizzyKitten              1584    613135
+2 Pelegrino1993            1074     80566
+3 ElOjoNinja               1484    273504
+4 Crystal_LoL              1466    167132
+5 Kyle                     3059    182260</code></pre>
 </div>
 </div>
 <p>What do you notice?</p>
+<p>I notice that there is an array of average viewers, followers, and channels every time I run the code.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>twitch_data <span class="sc">|&gt;</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(channel, average_viewers, followers) <span class="sc">|&gt;</span></span>
@@ -184,14 +185,15 @@ dplyr 1.1.0.
 <pre><code># A tibble: 5 × 2
   average_viewers followers
             &lt;dbl&gt;     &lt;dbl&gt;
-1            1891   1866339
-2             402    630255
-3            4147    576903
-4            2410    259338
-5            2764    915023</code></pre>
+1            3678    988237
+2            1953    314170
+3            1586    621921
+4            1384    961860
+5           24181   4074287</code></pre>
 </div>
 </div>
 <p>Describe the results in a few words. Does anything capture your attention?</p>
+<p>The results of viewers seem to be all over the place and the the thing that captures my attention the most is the average viewer outlier at over 5,000.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>twitch_data <span class="sc">|&gt;</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(channel, average_viewers, followers) <span class="sc">|&gt;</span></span>
@@ -214,6 +216,7 @@ dplyr 1.1.0.
 </div>
 </div>
 <p>What do you notice?</p>
+<p>I notice that the number of followers has seemed to go down a tad, but the overall average viewers has gone up.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>twitch_data <span class="sc">|&gt;</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(channel, average_viewers, followers) <span class="sc">|&gt;</span></span>
@@ -237,6 +240,7 @@ dplyr 1.1.0.
 </div>
 </div>
 <p>What do you see now? How does the relationship look like?</p>
+<p>I see that the number of followers has begin to go back up as well as the number of average viewers. The relationship looks like the more viewers, the more followers.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>twitch_data <span class="ot">&lt;-</span> twitch_data <span class="sc">%&gt;%</span> </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_viewers =</span> <span class="fu">log10</span>(average_viewers), </span>
@@ -291,6 +295,7 @@ $ .std.resid    &lt;dbl&gt; 1.3420109, 0.8227954, 0.5389316, -0.6251793, 0.59536
 </div>
 </div>
 <p>Do you think our model describes the relationship well?</p>
+<p>I think our model describes the relationship exceptionally well.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pred_data <span class="sc">%&gt;%</span> </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> log_followers, </span>
@@ -308,7 +313,13 @@ $ .std.resid    &lt;dbl&gt; 1.3420109, 0.8227954, 0.5389316, -0.6251793, 0.59536
 <p><img src="MD_HW5_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>What do you see? Are there any big residuals? DO they happen often in a particular range of our x-variable? If so, we would have a problem: our model would systematically fail to predict part of our data.</p>
+<p>What do you see?</p>
+<p>I see the number of viewers increasing increminetaly and the number of followers seeming to stay around the same.</p>
+<p>Are there any big residuals?</p>
+<p>There are some big residuals in the log(followers) category that are noticable.</p>
+<p>DO they happen often in a particular range of our x-variable?</p>
+<p>It seems the range that it seems to happen in is the x-variable in between 5 and 6.</p>
+<p>If so, we would have a problem: our model would systematically fail to predict part of our data.</p>
 </section>
 <section id="question-4" class="level2">
 <h2 class="anchored" data-anchor-id="question-4">Question 4</h2>
