@@ -158,13 +158,13 @@ Attaching package: 'janitor'</code></pre>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
-  channel          average_viewers followers
-  &lt;chr&gt;                      &lt;dbl&gt;     &lt;dbl&gt;
-1 PaymoneyWubby               5485    302419
-2 TobiasFate                  1233    701822
-3 Philza                      2991    527540
-4 루시아 (lucia94)            1603     82578
-5 ESL_CSGOb                   5114    575769</code></pre>
+  channel            average_viewers followers
+  &lt;chr&gt;                        &lt;dbl&gt;     &lt;dbl&gt;
+1 태준이 (dlxowns45)            2023    346631
+2 AladdinTV                     1416    110211
+3 dinablin                      2413    293748
+4 koil                          2791    299033
+5 Bonjwa                        1802    123954</code></pre>
 </div>
 </div>
 <p>What do you notice?</p>
@@ -184,11 +184,11 @@ dplyr 1.1.0.
 <pre><code># A tibble: 5 × 2
   average_viewers followers
             &lt;dbl&gt;     &lt;dbl&gt;
-1            1233    701822
-2            1985    330772
-3            1569    256448
-4            2647    179420
-5            9235    833047</code></pre>
+1            5195    303671
+2            1400     86561
+3            1169     51589
+4            2391    512592
+5            7522    828896</code></pre>
 </div>
 </div>
 <p>Describe the results in a few words. Does anything capture your attention?</p>
@@ -246,8 +246,10 @@ dplyr 1.1.0.
 <section id="question-2" class="level2">
 <h2 class="anchored" data-anchor-id="question-2">Question 2</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_viewers <span class="sc">~</span> average_viewers,  <span class="at">data =</span> twitch_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_viewers <span class="sc">~</span> log_followers,  <span class="at">data =</span> twitch_data) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>$$ 1.1^{0.4} = 4.442731 $$</p>
+<p>A 10% increase in followers is associated with a 4.2% increase in the average number of viewers.</p>
 </section>
 <section id="question-3" class="level2">
 <h2 class="anchored" data-anchor-id="question-3">Question 3</h2>
@@ -261,18 +263,33 @@ dplyr 1.1.0.
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 1,000
 Columns: 8
-$ log_viewers     &lt;dbl&gt; 4.442731, 4.408410, 4.040444, 3.887280, 4.471321, 4.62…
-$ average_viewers &lt;dbl&gt; 27716, 25610, 10976, 7714, 29602, 42414, 24181, 18985,…
-$ .fitted         &lt;dbl&gt; 4.227815, 4.156428, 3.660378, 3.549806, 4.291745, 4.72…
-$ .resid          &lt;dbl&gt; 0.21491505, 0.25198134, 0.38006578, 0.33747361, 0.1795…
-$ .hat            &lt;dbl&gt; 0.008367809, 0.007076837, 0.001537551, 0.001120491, 0.…
-$ .sigma          &lt;dbl&gt; 0.2790529, 0.2790217, 0.2788766, 0.2789317, 0.2790781,…
-$ .cooksd         &lt;dbl&gt; 0.0025247363, 0.0029276318, 0.0014310517, 0.0008215493…
-$ .std.resid      &lt;dbl&gt; 0.7735572, 0.9063824, 1.3633075, 1.2102753, 0.6467694,…</code></pre>
+$ log_viewers   &lt;dbl&gt; 4.442731, 4.408410, 4.040444, 3.887280, 4.471321, 4.6275…
+$ log_followers &lt;dbl&gt; 6.511388, 6.725108, 6.247393, 6.596030, 6.951284, 6.1940…
+$ .fitted       &lt;dbl&gt; 4.029761, 4.155534, 3.874400, 4.079572, 4.288638, 3.8430…
+$ .resid        &lt;dbl&gt; 0.4129697, 0.2528757, 0.1660436, -0.1922928, 0.1826833, …
+$ .hat          &lt;dbl&gt; 0.006194481, 0.008694557, 0.003782169, 0.007126066, 0.01…
+$ .sigma        &lt;dbl&gt; 0.3085580, 0.3087321, 0.3087919, 0.3087764, 0.3087820, 0…
+$ .cooksd       &lt;dbl&gt; 0.0056128779, 0.0029688873, 0.0005513456, 0.0014026033, …
+$ .std.resid    &lt;dbl&gt; 1.3420109, 0.8227954, 0.5389316, -0.6251793, 0.5953620, …</code></pre>
 </div>
 </div>
-<p>$$ 1.1^{0.4} = 4.442731 $$</p>
-<p>A 10% increase in followers is associated with a 4.2% increase in the average number of viewers.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pred_data <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> log_followers, </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> log_viewers)) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span> </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> log_followers, </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> .fitted), </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"orange"</span>) <span class="sc">+</span> </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Fitted Model and Raw Data"</span>, </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Followers &amp; Average Viewership"</span>, </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"log(followers)"</span>, </span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"log(viewers)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="MD_HW5_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="question-4" class="level2">
 <h2 class="anchored" data-anchor-id="question-4">Question 4</h2>
@@ -282,6 +299,7 @@ $ .std.resid      &lt;dbl&gt; 0.7735572, 0.9063824, 1.3633075, 1.2102753, 0.6467
 </section>
 <section id="question-6" class="level2">
 <h2 class="anchored" data-anchor-id="question-6">Question 6</h2>
+<p>Explore the residuals here using a similar plot as above. There are a couple of points our model really missed - which ones were they?</p>
 </section>
 
 </main>

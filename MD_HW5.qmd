@@ -79,8 +79,13 @@ twitch_data <- twitch_data %>%
 ## Question 2
 
 ```{r}
-fit1 <- lm(log_viewers ~ average_viewers,  data = twitch_data)
+
+fit1 <- lm(log_viewers ~ log_followers,  data = twitch_data) 
 ```
+
+\$\$ 1.1\^{0.4} = 4.442731 \$\$
+
+A 10% increase in followers is associated with a 4.2% increase in the average number of viewers.
 
 ## Question 3
 
@@ -93,12 +98,25 @@ pred_data <- augment(fit1)
 glimpse(pred_data)
 ```
 
-\$\$ 1.1\^{0.4} = 4.442731 \$\$
-
-A 10% increase in followers is associated with a 4.2% increase in the average number of viewers.
+```{r}
+pred_data %>% 
+  ggplot(aes(x = log_followers, 
+             y = log_viewers)) +
+  geom_jitter(alpha = 0.4) + 
+  geom_line(aes(x = log_followers, 
+                y = .fitted), 
+            col = "orange") + 
+  theme_minimal() +
+  labs(subtitle = "Fitted Model and Raw Data", 
+       title = "Followers & Average Viewership", 
+       x = "log(followers)", 
+       y = "log(viewers)")
+```
 
 ## Question 4
 
 ## Question 5
 
 ## Question 6
+
+Explore the residuals here using a similar plot as above. There are a couple of points our model really missed - which ones were they?
