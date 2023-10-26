@@ -27,14 +27,57 @@ gender_employment%>%
        x = "Year")
 ```
 
+```{r}
+library(broom)
+```
+
+```{r}
+library(moderndive)
+```
+
 ## Question 1
 
+```{r}
+gender_employment <- gender_employment %>% 
+  mutate(major_category = as.factor(major_category), 
+         major_category = relevel(major_category, ref = "Management, Business, and Financial"))
+```
+
+Let's begin by fitting a model where `wage_percent_of_male` is the outcome variable and the explanatory variables are `year` and `major_category`
+
+DONE
+
+```{r}
+parallel_model <- lm(wage_percent_of_male ~ year + major_category, data = gender_employment)
+broom::tidy(parallel_model)
+```
+
+Now, fit the model described above and save it as `parallel_model`. Using `tidy()` from the `broom` package, summarize the results. Can we say anything about overall trends by year?
+
+The overall trends by year is substantially decreasing at a rate of -300.4 according to the data.
+
+Okay, that was a lot. Now you do some interpretation. Using the coefficients from your model, calculate the wage percentage of male income for Sales and Office occupations on 2015.
+
+Now calculate the wage percentage of male income for Service occupations on 2016.
+
 ## Question 2
+
+What do you notice? Is the parallel trends assumption warranted?
+
+```{r}
+gender_employment |>
+  ggplot(aes(x = year, y = wage_percent_of_male, group = major_category, colour = major_category)) + geom_jitter(alpha = 0.5) + 
+labs(title = "Women's earnings with respect to men's", 
+       y = "% of Men's Income", 
+       x = "Year") 
+```
+
+What do you notice? Is the parallel trends assumption warranted?
 
 ## Question 3
 
 ## Question 4
 
-## Question  5
+## Question 5
 
 ## Question 6
