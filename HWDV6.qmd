@@ -84,6 +84,10 @@ I notice that the parallel trends assumption is indeed warranted, and that using
 
 ## Question 4
 
+Given that we have the ability to add interactions to models - i.e. to have slopes vary across categories -, why would we choose to build a model that assumes parallel trends?
+
+We would choose to build a model that assumes parallel trends because it allows for the data to be more descriptive and constant.
+
 ## Question 5
 
 ## Question 6
