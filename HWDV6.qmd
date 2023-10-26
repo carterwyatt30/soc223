@@ -1,0 +1,40 @@
+---
+title: "HWDV6"
+author: Carter Wyatt
+format: html
+editor: visual
+embed-resources: true
+---
+
+```{r}
+library(tidyverse)
+# Set our ggplot theme from the outset
+theme_set(theme_light())
+# Read in the data 
+gender_employment <- read_csv("https://raw.githubusercontent.com/vaiseys/dav-course/main/Data/gender_employment.csv")
+
+# Glimpse at the data 
+glimpse(gender_employment)
+```
+
+```{r}
+gender_employment%>% 
+  ggplot(aes(x = year, y = wage_percent_of_male)) +
+  geom_jitter(alpha = 0.1) + 
+  geom_smooth(method = "lm") + 
+  labs(title = "Women's earnings with respect to men's", 
+       y = "% of Men's Income", 
+       x = "Year")
+```
+
+## Question 1
+
+## Question 2
+
+## Question 3
+
+## Question 4
+
+## Question  5
+
+## Question 6

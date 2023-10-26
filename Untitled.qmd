@@ -1,39 +1,26 @@
 ---
-title: "DV5Homework"
-author: "Carter Wyatt"
+title: "Untitled"
 format: html
 editor: visual
-embed resources: true
 ---
 
-```{r}
-library(tidyverse)
+## Quarto
 
-twitch_data <- read_csv
-twitch_data <- read_csv("https://github.com/vaiseys/dav-course/blob/main/Data/twitchdata-update.csv")
-```
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
 
-```{r}
-library(janitor)
-twitch_data <- clean_names(twitch_data)
+## Running Code
 
-# Inspect new names
-colnames(twitch_data)
-```
-
-## Question 1
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
-twitch_data |>
-  sample_n(size = 5)
+1 + 1
 ```
 
-## Question 2
+You can add options to executable code like this
 
-## Question 3
+```{r}
+#| echo: false
+2 * 2
+```
 
-## Question 4
-
-## Question 5
-
-## Question 6
+The `echo: false` option disables the printing of code (only output is displayed).
