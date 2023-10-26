@@ -56,13 +56,17 @@ Now, fit the model described above and save it as `parallel_model`. Using `tidy(
 
 The overall trends by year is substantially decreasing at a rate of -300.4 according to the data.
 
-Okay, that was a lot. Now you do some interpretation. Using the coefficients from your model, calculate the wage percentage of male income for Sales and Office occupations on 2015.
+Okay, that was a lot. Now you do some interpretation.
+
+Using the coefficients from your model, calculate the wage percentage of male income for Sales and Office occupations on 2015.
+
+I am unsure.
 
 Now calculate the wage percentage of male income for Service occupations on 2016.
 
-## Question 2
+I am unsure.
 
-What do you notice? Is the parallel trends assumption warranted?
+## Question 2
 
 ```{r}
 gender_employment |>
@@ -73,6 +77,8 @@ labs(title = "Women's earnings with respect to men's",
 ```
 
 What do you notice? Is the parallel trends assumption warranted?
+
+I notice that the parallel trends assumption is indeed warranted, and that using color to facet it makes this much easier to understand and interpret.
 
 ## Question 3
 
