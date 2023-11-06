@@ -1,0 +1,9 @@
+---
+title: "project-idea.qmd"
+author: Carter Wyatt
+format: html
+editor: visual
+embed-resources: true
+---
+
+## 
