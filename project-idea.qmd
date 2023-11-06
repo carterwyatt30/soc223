@@ -6,4 +6,16 @@ editor: visual
 embed-resources: true
 ---
 
-## 
+Your assignment for this Sunday night is to come up with a topic and a tentative dataset for your final project. You only need a few sentences (3-4) on your topic (or, better yet, specific research question).
+
+TOPIC:
+
+Predicting 2023-2024 NBA MVP.
+
+Dataset:
+
+(SENT A MESSAGE IN eD ABOUT THE ERRORS LOADING THE DATA)
+
+Sentences:
+
+My topic revolves around the National Basketball Association (NBA) and the current season. The dataset I have found has all the stats for each player that has entered the game this year for every single team across the entire league. I will use this data of the players and their current stats to predict the future Most Valuable Player (MVP) based on the player's statistics and production.
