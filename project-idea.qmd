@@ -6,6 +6,10 @@ editor: visual
 embed-resources: true
 ---
 
+```{r}
+library(tidyverse)
+```
+
 Your assignment for this Sunday night is to come up with a topic and a tentative dataset for your final project. You only need a few sentences (3-4) on your topic (or, better yet, specific research question).
 
 TOPIC:
@@ -19,5 +23,6 @@ My topic revolves around the National Basketball Association (NBA) and the curre
 Dataset:
 
 ```{r}
-read.csv("2023-2024 NBA Player Stats - Regular.csv")
+read_delim("2023-2024 NBA Player Stats - Regular.csv",
+           delim = ";")
 ```
