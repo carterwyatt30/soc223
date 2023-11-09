@@ -21,5 +21,5 @@ Sentences:
 My topic revolves around the National Basketball Association (NBA) and the current season. The dataset I have found has all the stats for each player that has entered the game this year for every single team across the entire league. I will use this data of the players and their current stats to predict the future Most Valuable Player (MVP) based on the player's statistics and production.
 
 ```{r}
-
+read.csv("2023-2024 NBA Player Stats - Regular.csv")
 ```
