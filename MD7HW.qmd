@@ -1,0 +1,158 @@
+---
+title: "MD7HW"
+author: "Carter Wyatt"
+format: html
+editor: visual
+embed-resources: true
+---
+
+Let's begin by loading in a data frame containing all Nobel prize winners.
+
+```{r}
+library(tidyverse)
+library(here)
+library(moderndive)
+theme_set(theme_minimal())
+
+nobel_winners <- read_csv("https://raw.githubusercontent.com/vaiseys/dav-course/main/Data/nobel_winners.csv")
+```
+
+Given that we are only interested in scientific Nobel prizes, let's get rid of the Nobel Peace prize. We will also create a column that indicates whether the recipient was born in the US.
+
+```{r}
+nobel_winners_flt <- nobel_winners %>% 
+  filter(category != "Peace") %>% 
+  mutate(is_us = if_else(birth_country == "United States of America", 1, 0))
+```
+
+Now, what is the *true* proportion of US-born Nobel prize winners?
+
+The true proportion of US-born Nobel prize winners is:
+
+```{r}
+
+true_prop <- nobel_winners_flt %>% 
+  group_by(is_us) %>% 
+  summarise(prop = n()/nrow(nobel_winners_flt))
+
+ggplot() + 
+  coord_cartesian(xlim = c(0,1), ylim = c(0,1)) + 
+  geom_vline(xintercept = true_prop[2,2][[1]], linetype = "dashed")  + 
+  labs(x = "Proportion")
+```
+
+Now, let's say our friend gives us a random sample of 25 Nobel winners and we calculate our proportion. How far off would we be?
+
+```{r}
+set.seed(33)
+# Random sample 
+our_sample <- sample_n(nobel_winners_flt, 
+                       size = 25, 
+                       replace = F)
+
+sample_prop <- our_sample %>% 
+  group_by(is_us) %>% 
+  summarise(prop = n()/nrow(our_sample))
+
+# How does our proportion look like? 
+ggplot() + 
+  coord_cartesian(xlim = c(0,1), ylim = c(0,1)) + 
+  geom_vline(xintercept = true_prop[2,2][[1]], linetype = "dashed")  + 
+  geom_vline(xintercept = sample_prop[2,2][[1]], linetype = "dotted", col = "red") +
+  labs(x = "Proportion")
+```
+
+We would not be as far off as once expected, I think we would be relatively close.
+
+## Question 1
+
+Let's explore some of the vocabulary provided in the chapter.
+
+-   In this scenario, what is the population?
+
+    In this scenario, the population is the Nobel Prize Winners.
+
+-   What is the sampling frame?
+
+    The sampling frame is the porportion.
+
+-   What does the black line represent? (hint: the word population is in the name).
+
+    The black line represents the population parameter.
+
+-   What does the red line represent?
+
+    The red line represents the census.
+
+## Question 2
+
+Using this function, take 50 samples of 25 winners each. Plot your results. Be sure to add the mean proportion of your samples and the true proportion we calculated above. HINT: `summarize()` is going to be useful here.
+
+```{r}
+nobel_size_25 <-  nobel_winners_flt|>
+  rep_sample_n(size = 25, reps = 50) |>
+  group_by(replicate) |> 
+  summarise(prop = sum(is_us)/25) 
+ggplot(nobel_size_25, aes(x = prop))+ geom_histogram(binwidth = 0.02, color = "white")+ geom_vline(aes(xintercept = mean(prop)), color="blue", linetype="dashed", size=.5) +
+labs(x = "Prop", y = "The Count", title = "Samples of Winners #1")
+```
+
+## Question 3
+
+Now, use this function to take 50 samples of 100 winners each. Plot your results in the same way that you did above.
+
+```{r}
+nobel_size_25 <-  nobel_winners_flt|>
+  rep_sample_n(size = 100, reps = 50) |>
+ group_by(replicate) |> 
+  summarise(prop = sum(is_us)/100) 
+ggplot(nobel_size_25, aes(x = prop))+ geom_histogram(binwidth = 0.02, color = "black")+ geom_vline(aes(xintercept = mean(prop)), color="red", linetype="dashed", size=.5) +
+  labs(x = "Prop", y = "The Count", title = "Samples of Winners #2")
+```
+
+Which one of the two distributions varies more. Can you explain why?
+
+I would say that of the two distributions, #1 differs more because there is more space in between the bar graph that allows for more variability rather than the bars being closer together and more relative in #2.
+
+## Question 4
+
+```{r}
+rep_sample_25 <- nobel_winners_flt |>
+rep_sample_n(size = 25, reps = 50) |>
+summarize(prop = n()/nrow(nobel_winners_flt))
+
+ (rep_sample_25)
+```
+
+```{r}
+rep_sample_25 |> 
+summarize(sd = sd(prop))
+```
+
+Do these results support your argument above?
+
+These results do support my argument above because with less sample size being taken into account, there is more proportion and as more and more people in the population are taken into account, there is less proportionally.
+
+What does this imply about sample size? What happens to the variability in our estimates as the sample size increases?
+
+This has a lot to say about sample size because as variability becomes less and less and much closer in our estimates as sampling size increases.
+
+## Question 5
+
+Now, repeat the same steps above to find the proportion of women who have been awarded the Nobel prize. Draw samples of 100 scientists at a time and plot your distribution of proportions.
+
+```{r}
+nobel_winners_flt<- nobel_winners_flt |> mutate(gender1 = if_else(gender=="Female",1,0)) |>
+  rep_sample_n(size = 100, reps = 50) |>
+ group_by(replicate) |> 
+  summarise(prop = sum(is_us)/100) 
+ggplot(nobel_size_25, aes(x = prop))+ geom_histogram(binwidth = 0.02, color = "black")+ geom_vline(aes(xintercept = mean(prop)), color="red", linetype="dashed", size=.5) +
+  labs(x = "Prop", y = "The Count", title = "Women Who Have Been Awarded the Nobel Prize")
+  
+```
+
+## Question 6
+
+The last question is a bit different. Please watch [this video](https://www.youtube.com/watch?v=jvoxEYmQHNM) referenced in the ModernDive book, then explain the **Central Limit Theorem** it in your own words. Be as concise as you can (i.e., use no more than 3-4 sentences) but convince me you really understand the basic idea.
+
+The Central Limit Theorm is a sample of the entire population and is the average of every single sample chosen and each central limit sample is representative of what the distribution would have been if the entire population was sampled.
