@@ -1,0 +1,57 @@
+---
+title: "project_final"
+author: Carter Wyatt
+format: html
+editor: visual
+embed-resources: true
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+```
+
+```{r}
+NBA_Stats <- read_delim("2023-2024 NBA Player Stats - Regular.csv",
+           delim = ";")
+glimpse(NBA_Stats)
+
+NBA_Stats <- NBA_Stats |>
+  select(PTS, MP, AST, TRB, FG, Player)
+
+
+NBA_MVPs <- NBA_Stats |>
+  mutate(
+    is_MVP = ifelse(
+      Player %in% c("Joel Embiid", "Nikola Jokic", "Giannis Antetokounmpo", "James Harden", "Russell Westbrook", "Stephen Curry", "Kevin Durant", "LeBron James"), 1, 0)
+  )
+
+
+
+
+```
+
+```{r}
+NBA_MVPs |>
+  ggplot(
+    aes(x = PTS)
+  ) + geom_histogram()
+```
+
+```{r}
+
+NBA_MVPs |>
+  ggplot(
+    aes(x = PTS, y = MP)
+  ) + geom_point() +
+  geom_smooth(method = lm, se = FALSE)
+  
+
+```
+
+```{r}
+NBA_MVPs |>
+  ggplot(
+    aes(x = FG)
+  ) + geom_boxplot()
+```
