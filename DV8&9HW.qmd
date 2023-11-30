@@ -1,0 +1,192 @@
+---
+title: "DV8&9HW"
+author: "Carter Wyatt"
+format: html
+editor: visual
+embed-resources: true
+---
+
+```{r}
+library(tidyverse)
+library(moderndive)
+library(infer)
+```
+
+## Chapter 8
+
+## Question 1
+
+```{r}
+set.seed(1108)
+
+poll <- tibble(
+  vote_gop = rbinom(n = 1000,
+                    size = 1,
+                    prob = .53))
+```
+
+```{r}
+percentile_95 <- poll |> 
+  get_confidence_interval(level = 0.95, type = "percentile")
+percentile_95
+```
+
+```{r}
+
+percentile_95 |> 
+  rep_sample_n(size = 1, replace = TRUE, reps = 1000) %>% 
+  group_by(replicate) |> 
+  summarize(gop_share = mean(year))
+
+confidence <- quantile(c(.025, .975))
+
+
+print(confidence)
+
+```
+
+What is the estimated confidence interval?
+
+The estimated confidence interval is around .25.
+
+```{r}
+bootstrap_95 <- poll |>
+  specify(response = vote_gop) |> 
+  generate(reps = 1000, type = "bootstrap") |> 
+  calculate(stat = "mean")
+
+get_ci(bootstrap_95, level = 0.95)
+```
+
+What is the estimated confidence interval?
+
+The estimated confidence interaval is somewhere between 0.484 and .544.
+
+How similar are the two confidence intervals you calculated? Why aren't they *exactly* the same?
+
+The two confidence intervals are relatively similar and they aren't exactly the same because of the interevals and how random the data is.
+
+## History of Rap
+
+```{r}
+rap_poll <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-14/polls.csv")
+```
+
+```{r}
+filter_rap <- rap_poll |>
+  filter(rank == 1)
+
+glimpse(filter_rap)
+```
+
+## Question 2
+
+```{r}
+filter_rap |>
+  ggplot(
+    aes(x = year)
+  ) +
+  geom_histogram() +
+  labs(x = "Year", y = "Count", title = "Track by Year", alpha = 0.2)
+```
+
+What is the year of the most commonly named favorite track in this critic poll?
+
+1994 AND 1992 both have the most commonly named favorite track.
+
+How many critics named a track from this year?
+
+Both of them are at 12.
+
+## Question 3
+
+```{r}
+critics <- filter_rap |>
+  specify(response = year) |> 
+  generate(reps = 1000, type = "bootstrap") |> 
+  calculate(stat = "mean")
+
+get_ci(critics, level = 0.95)
+```
+
+Report the upper and lower bound of this interval to the nearest year.
+
+Lower = 1993
+
+Upper = 1996
+
+## Question 4
+
+```{r}
+critics |> 
+  rep_sample_n(size = 25, replace = TRUE, reps = 1000) %>% 
+  group_by(stat) |> 
+  summarize(rank = mean(rank))
+
+critics <- quantile(c(.025, .975))
+
+print(critics)
+```
+
+How does the width of this confidence interval compare to the width of the confidence interval when we use the full sample of 107?
+
+The width of this confidence interval should be smaller because 25 is less than 107 and should be more precise and accurate.
+
+## Chapter 9
+
+```{r}
+pl_data <- read_csv("https://raw.githubusercontent.com/vaiseys/dav-course/main/Data/premier_league.csv")
+
+glimpse(pl_data)
+```
+
+## Question 5
+
+```{r}
+
+pl_data |>
+  filter(result == "hw") |>
+  summarise(proportion_HomeW = n() / nrow(pl_data))
+```
+
+## Question 6
+
+```{r}
+set.seed(22)
+
+sampled_proportions <- c()
+
+for (i in 1:1000) {
+  
+  sampled_results <- sample(c("aw", "hw" , "d"), 
+                            size = 380,
+                            replace = TRUE, 
+                            prob = c(1/3,1/3,1/3))
+  prop <- sum(sampled_results == "hw")/380
+  sampled_proportions[i] <- prop
+  
+}
+
+
+```
+
+```{r}
+
+hw_1 <- data.frame(proportions = sampled_proportions) 
+ggplot(hw_1,
+mapping = aes(x = proportions)
+) + geom_histogram(fill = "yellow", color = "grey") +
+  labs(x = "Proportion", y = "Count", title = "PL HW Test")
+```
+
+## Question 7
+
+In this scenario, what would be the null hypothesis and the alternative hypothesis? Provide enough detail so that I know you understand.
+
+The null hypothesis would be proportions because there will be no change, and the alternative hypothesis would be the sampled proportions.
+
+## Question 8
+
+What would a p-value mean in this example?
+
+The P value would mean the likelyhood of the data actually being sampled and proportioned.
