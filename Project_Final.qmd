@@ -4,10 +4,13 @@ author: Carter Wyatt
 format: html
 editor: visual
 embed-resources: true
+echo: false
 ---
 
 ```{r}
+
 library(tidyverse)
+library(tidymodels)
 library(dplyr)
 ```
 
@@ -22,8 +25,8 @@ NBA_Stats <- NBA_Stats |>
 
 NBA_MVPs <- NBA_Stats |>
   mutate(
-    is_MVP = ifelse(
-      Player %in% c("Joel Embiid", "Nikola Jokic", "Giannis Antetokounmpo", "James Harden", "Russell Westbrook", "Stephen Curry", "Kevin Durant", "LeBron James"), 1, 0)
+    is_MVP = as.factor(ifelse(
+      Player %in% c("Joel Embiid", "Nikola Jokic", "Giannis Antetokounmpo", "James Harden", "Russell Westbrook", "Stephen Curry", "Kevin Durant", "LeBron James"), 1, 0))
   )
 
 
@@ -54,4 +57,53 @@ NBA_MVPs |>
   ggplot(
     aes(x = FG)
   ) + geom_boxplot()
+```
+
+```{r}
+MVP_Fit <- logistic_reg() |>
+  set_engine("glm") |>
+  fit(is_MVP ~ PTS + MP + AST + TRB + FG, data = NBA_MVPs, family = "binomial")
+
+tidy(MVP_Fit) 
+```
+
+$$
+\widehat{is\_MVP} = -8.51 + 0.14*PTS - 0.05*MP + 0.04*AST + 0.22TRB + 0.30*FG 
+$$
+
+```{r}
+tidy(MVP_Fit, conf.int = TRUE) 
+```
+
+```{r}
+df_MVP <- augment(MVP_Fit$fit)
+
+df_MVP |>
+  ggplot(aes(x = .resid)) +
+  geom_histogram()
+```
+
+```{r}
+df_MVP |>
+  ggplot(
+    aes(y = .resid, x = MP)) +
+  geom_point()
+```
+
+```{r}
+df_MVP |>
+  ggplot(aes(y = .resid, x = .fitted)) +
+  geom_point()
+```
+
+```{r}
+player <- tibble(
+  PTS = 1,
+  MP = 1, 
+  AST = 1, 
+  TRB = 1, 
+  FG = 1
+)
+
+predict(MVP_Fit, player)
 ```
