@@ -8,7 +8,6 @@ echo: false
 ---
 
 ```{r}
-
 library(tidyverse)
 library(tidymodels)
 library(dplyr)
@@ -20,7 +19,7 @@ NBA_Stats <- read_delim("2023-2024 NBA Player Stats - Regular.csv",
 glimpse(NBA_Stats)
 
 NBA_Stats <- NBA_Stats |>
-  select(PTS, MP, AST, TRB, FG, Player)
+  select(PTS, AST, TRB, MP, Player)
 
 
 NBA_MVPs <- NBA_Stats |>
@@ -55,20 +54,20 @@ NBA_MVPs |>
 ```{r}
 NBA_MVPs |>
   ggplot(
-    aes(x = FG)
+    aes(x = PTS)
   ) + geom_boxplot()
 ```
 
 ```{r}
 MVP_Fit <- logistic_reg() |>
   set_engine("glm") |>
-  fit(is_MVP ~ PTS + MP + AST + TRB + FG, data = NBA_MVPs, family = "binomial")
+  fit(is_MVP ~ PTS + AST + TRB + MP, data = NBA_MVPs, family = "binomial")
 
 tidy(MVP_Fit) 
 ```
 
 $$
-\widehat{is\_MVP} = -8.51 + 0.14*PTS - 0.05*MP + 0.04*AST + 0.22TRB + 0.30*FG 
+\widehat{is\_MVP} = -8.51 + 0.14*PTS + 0.04*AST + 0.22TRB + 0.30*FG 
 $$
 
 ```{r}
@@ -86,7 +85,7 @@ df_MVP |>
 ```{r}
 df_MVP |>
   ggplot(
-    aes(y = .resid, x = MP)) +
+    aes(y = .resid, x = PTS)) +
   geom_point()
 ```
 
@@ -96,14 +95,29 @@ df_MVP |>
   geom_point()
 ```
 
+Last graph: fan out = not constant variance --\> systematic patterns
+
 ```{r}
 player <- tibble(
-  PTS = 1,
-  MP = 1, 
-  AST = 1, 
-  TRB = 1, 
-  FG = 1
+  PTS = 20,
+  AST = 5, 
+  TRB = 5, 
+  MP = 5
 )
 
 predict(MVP_Fit, player)
+```
+
+need a log
+
+histogram or plot
+
+(give context)
+
+Citations are not needed unless you used another one
+
+```{r}
+NBA_Stats |> 
+select(PTS, AST, TRB, MP) |>
+  cor()
 ```
