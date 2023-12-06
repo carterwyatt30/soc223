@@ -1,0 +1,238 @@
+---
+title: "CarterWyatt_project_final"
+author: Carter Wyatt
+format: html
+editor: visual
+embed-resources: true
+echo: false
+toc: true
+message: false
+warning: false
+---
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(dplyr)
+```
+
+```{r}
+NBA_Stats <- read_delim("2023-2024 NBA Player Stats - Regular.csv",
+           delim = ";")
+
+NBA_Stats <- NBA_Stats |>
+  select(PTS, AST, TRB, MP, Player)
+
+
+NBA_MVPs <- NBA_Stats |>
+  mutate(
+    is_MVP = as.factor(ifelse(
+      Player %in% c("Joel Embiid", "Nikola Jokic", "Giannis Antetokounmpo", "James Harden", "Russell Westbrook", "Stephen Curry", "Kevin Durant", "LeBron James"), 1, 0))
+  )
+
+
+
+
+```
+
+# Using NBA Statistics of Every Current NBA Players to Determine the Most Important Statistic to Win and Predict MVP
+
+Carter Wyatt
+
+Last Updated 2023-12-06
+
+[![](https://cdn.nba.com/manage/2022/12/mj-final.jpg){alt="NBA unveils The Michael Jordan Trophy to be awarded to Kia MVP | NBA.com" width="284"}](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.nba.com%2Fnews%2Fnba-unveils-6-new-kia-performance-award-winner-trophies&psig=AOvVaw1oD9r8cBlAcNdg1J67pM5B&ust=1701959295143000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJCVwMuC-4IDFQAAAAAdAAAAABAE)
+
+# 1. Introduction
+
+The National Basketball Association (NBA) is one of the largest entertainment industries in the entire world. With global basketball stars are icons, players such as LeBron James, Michael Jordan, and Kobe Bryant are some of the most recognizable names on the planet even if you are not even remotely a sports fan you have probably heard one of these names before. This is because the NBA does a fantastic job globalizing the sport and creating one of the most entertaining sports industries through social media, television viewership, or hearing about amazing broken records and statistics throughout the league and history being made every year in the NBA.
+
+At the conclusion of every NBA season the Most Valuable Player (MVP) is awarded to the player who statistically had the best performance over the course of the regular season. This data set used in the project had a list of all 426 NBA players and their total stats for the season through November. While trying to determine the NBA MVP I had to determine what is most important in determining what makes a specific player. In order to do this, I filtered the data sets and created indicator variables for the NBA MVP each year from 2013-2022 to determine which statistics are important in determining MVP.
+
+In the midst of doing so, I realized that the indicator variable is binary and categorical so I had to use a logistic regression model instead of a linear regression model. After filtering for the indicator variable I determined that 4 stats were most important were average points per game (PTS), average assists per game (AST), average rebounds per game (TRB), and average total minutes played per game (MP). These stats are most important for NBA because the players that accumulate the highest average points per game are often among the conversation for MVP every season. On top of points per game, players that have higher total rebounds and assists make a more complete and well-rounded player that makes their MVP case stronger. Directly, the more minutes played give a player more of an opportunity to score more points, as well as collect more rebounds, and accumulate more assists.
+
+# 2. Exploratory data analysis 
+
+In this data set for NBA stats, there are 426 rows each representing a players for example LeBron James, Kevin Durant, and Stephen Curry and their 4 most important stats for their individual case to determine if they are up for MVP based on their individual performance. There are 6 total columns and of these the first 4 are the most important being PTS, AST, TBR, and MR as described in the introduction. The final two columns is the "player" category determining their name and showing their stats, and the final column is "is_MVP" which gives and indicator of 1 being is an MVP, and 0 meaning based on the stats not an MVP.
+
+### *Graph 1*
+
+```{r}
+NBA_MVPs |>
+  ggplot(
+    aes(x = PTS)
+  ) + geom_histogram(fill = "gold") +
+  labs(x = "Points", y = "Count", title = "NBA Player Points Per Game")
+```
+
+As we can see in graph 1, this graph is right skewed and we can see that there are extreme indicators and outliers that prove that scoring more points per game is extremely difficult as there are barely any players that average over 30 points per game. The most common count of NBA in the data set is 0 points with over 40 players not even scoring a point. While the most common average players fall between the 0 and 20 range.
+
+### *Graph 2*
+
+```{r}
+
+NBA_MVPs |>
+  ggplot(
+    aes(x = PTS, y = MP)
+  ) + geom_point(fill = "blue") +
+  geom_smooth(method = lm, se = FALSE) +
+  labs(x = "Points Per Game", y = "Minutes Played Per Game", title = "Points Scored Per Minutes Played")
+  
+
+```
+
+As we can see in graph 2, there is a direct correlation that shows that players who play more minutes, score more points. With more time available to make shots, players capitalize on their opportunity and score more points which allow for their chance of MVP to be greater.
+
+### *Graph 3*
+
+```{r}
+NBA_MVPs |>
+  ggplot(
+    aes(x = AST)
+  ) + geom_boxplot(fill = "purple") +
+  labs(x = "Assists Per Game", y = "Count", title = "Summary of Player Assists Per Game")
+```
+
+As we can see in graph 3, there are a ton of outliers in the graph that prove that there are indications of players who do not meet the median average of assists per game which is less than 1 assist per game. The outliers prove to be more likely to be MVP because there are clearly much less players in this category and far away from the median. The outliers range anywhere from over 5 assists to 12 assists, which boosts the chance of being a complete player.
+
+### *Graph 4*
+
+```{r}
+NBA_MVPs |>
+  ggplot(
+    aes(x = TRB)
+  ) + geom_histogram(fill = "orange") +
+  labs(x = "Total Rebounds Per Game", y = "Count", title = "Summary of Total Rebounds per Game")
+```
+
+As we can see in graph 4, his graph is once again right skewed and we can see that there are extreme indicators and outliers that prove that getting more total rebounds per game is extremely difficult as there are barely any players that average over 10 total rebounds per game. The greater total rebound number can significantly improve a players MVP chances as there are less individuals with a higher number of total rebounds.
+
+# 3. Multiple logistic regression
+
+## 3.1 Methods
+
+In order to determine our multiple logistical regression we used:
+
+-   Outcome/Binary variable = is_MVP
+
+-   Numerical variables = PTS, AST, TBR, and MP
+
+-   Categorical Variable = Player
+
+Each row representing each individual player has PTS, AST, TBR, and MP as well as determining is_MVP.
+
+## 3.2 Model Results
+
+This table represents a model fit for determining PTS, AST, TBR, and MP along with the intercept.
+
+```{r}
+MVP_Fit <- logistic_reg() |>
+  set_engine("glm") |>
+  fit(is_MVP ~ PTS + AST + TRB + MP, data = NBA_MVPs, family = "binomial")
+
+tidy(MVP_Fit) 
+```
+
+## 3.3 Interpreting the logistic regression
+
+The interpretation for the logistic regression is as stated:
+
+-   For every increase in average points per game the odds of player being an MVP are multiplied by 1.27 (exp(0.23841585)), holding all else constant.
+
+-    For every increase in average assists per game the odds of player being an MVP are multiplied by 1.06 (exp(0.05437313)), holding all else constant.
+
+-   For every increase in average rebounds per game the odds of player being an MVP are multiplied by 1.28 (exp(0.23841585)), holding all else constant.
+
+-   For every increase in average minutes player per game the odds of player being an MVP are multiplied by 0.95 (exp(-0.05497465)), holding all else constant.
+
+The logistic regression equation is as stated:
+
+$$
+\widehat{is\_MVP} = -8.42 + 0.24*PTS + 0.05*AST + 0.25TRB - 0.05*MP 
+$$
+
+-   Of all of the predictors points I say that points is by far the most significant because the p vauue is the lowest at 0.016. This is the most significant of all other p-values because it is less than 0.05. The rest of the statistics p-values are greater than 0.05 and I can interpret the confidence interval below for points based on the confidence low and confidence high.
+
+```{r}
+tidy(MVP_Fit, conf.int = TRUE) 
+```
+
+-   I am 95% confident for every increase in average points per game that the odds of player being a MVP are multiplied by 1.06 to 1.58, holding all else constant as this is the most important statistic to predict the MVP.
+
+-   I also state that points (PTS) is the most important statistic as the odds are greater than 1, while the p value is closest to 0. This gives the regression the most accurate statistic in the data and is the greatest predictor in determining the NBA MVP.
+
+## 3.4 Residual Analysis
+
+I conducted a residual analysis to see if there was any other information I could find to determine any patterns or ideals about the data.
+
+### *Residual Graph 1*
+
+```{r}
+df_MVP <- augment(MVP_Fit$fit)
+
+df_MVP |>
+  ggplot(aes(x = .resid)) +
+  geom_histogram(fill = "pink") +
+labs(x = "Residuals", y = "Count", title = "Residual Analysis")
+```
+
+### *Residual Graph 2*
+
+```{r}
+df_MVP |>
+  ggplot(
+    aes(y = .resid, x = PTS)) +
+  geom_point(fill = "red") +
+  labs(x = "Total Points", y = "Residual", title = "Residual Analysis of Points")
+```
+
+### *Residual Graph 3*
+
+```{r}
+df_MVP |>
+  ggplot(aes(y = .resid, x = .fitted)) +
+  geom_point(fill = "green") +
+  labs(x = "Fit", y = "Residual", title = "Fitted Residual Analysis")
+```
+
+Last graph: fan out = not constant variance --\> systematic patterns
+
+As you can see in residual graph 3, the data begins to fan out toward the end that shows there is not constant variance within the data there is not systematic patterns of prediction in the data.
+
+### *Correlations of the Statistics Table*
+
+```{r}
+NBA_Stats |> 
+select(PTS, AST, TRB, MP) |>
+  cor()
+```
+
+Above in the correlations of statistics we can see that PTS has the highest correlation at 1.00 which shows that it has the highest chance of predicting the MVP.
+
+# 4. Discussion
+
+## 4.1 Conclusions
+
+Throughout the duration of this project, it has become more than evident that the NBA MVP can be predicted using a specific set of statistics. It is clear that minutes played, total assists per game, total rebounds per game, and most importantly points per game. All four of the statistics that I graphed, analyzed, and evaluated all proved to be very important when predicting MVP. But more important than anything else the points scored per game average is most important when determining MVP.
+
+The trends of former players such as Giannis Anteokoumpo, Russell Westbrook, and Nikola Jokic all prove that points per game is the most important numerical variable when determining MVP. These results prove that while all statistics are important for winning an NBA, a higher points per game average greatly increases one's chances to win the most valuable player award.
+
+## 4.2 Limitations
+
+While no set of variables or prediction can ever be perfect there are limitations that can effect the desired outcome. Mainly in this data set, the biggest limitation is that the data set only provides stats from the month of November and would need to be redone at the end of the NBA regular season in April. Another limitation is that there could be injury from a player that provides inflated statistics within a season per a minimum number of games played. One final limitation is a players impact on games won, a team that has a player with great stats but few wins will not win the league's MVP award.
+
+## 4.3 Further Questions
+
+If I was to continue researching what I could do to improve and predict NBA MVP in the future, I would question how accurate does the data stand over a span of long periods of time. Could one use these same trends in the NBA in the 1960s, 1970s, and 1980s to predict the NBA or has the game changed over time. Further questioning also determines if voter bias and player name recognition based on previous season has any indication if the voters will choose a specific candidate over another.
+
+For example LeBron James is a 4-time MVP, does this negatively or positively impact his chances of receiving the NBA MVP award.
+
+# 5. Citation Page
+
+(Image of MVP Trophy)
+
+1.  release, Official. \"NBA Unveils the Michael Jordan Trophy to Be Awarded to KIA MVP.\" *NBA.Com*, www.nba.com/news/nba-unveils-6-new-kia-performance-award-winner-trophies. Accessed 6 Dec. 2023.
+
+(Used the Model Example You Gave Us for my Project Template but did not use any of their data just followed their outline because Professor Vaisey said it was a great project example)
+
+2.  https://moderndive.github.io/moderndive_labs/static/term_project/resubmission_example.html#35_residual_analysis
